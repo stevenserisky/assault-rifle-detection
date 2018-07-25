@@ -364,7 +364,46 @@ while(cap.isOpened()):
                         #cv2.imwrite('/tf_files/save_threat_image/' + str((sys.argv)[1]) + "-frame%d.jpg" % person_count, roi)
 
                         
-                       
+                       # Package bounding box info for ES
+                        xmin = px[person] 
+                        xmax = (px[person] + wid[person])
+                        ymin = py[person] 
+                        ymax = (py[person] + hei[person])
+                        
+                                            
+                        tdoc = {
+                            #'timestamp': datetime.now(),
+                            'content': 'Video information',
+                            'text': 'Object detected.',
+                            'xmin': xmin,
+                            'xmax': xmax,
+                            'ymin': ymin,
+                            'ymax': ymax,
+                         }
+                    
+                        # Send results to ES
+                        if url == RECEPTION_EAST:
+                            res = es.index(index="reception-east", doc_type="_doc", body=tdoc)
+                            print('ES document sent.')
+                            print(tdoc)
+                        elif url == RECEPTION_WEST:
+                            res = es.index(index="reception-west", doc_type="_doc", body=tdoc)
+                            print('ES document sent.')
+                            print(tdoc)
+                        elif url == OUTSIDE_WEST:
+                            res = es.index(index="outside-west", doc_type="_doc", body=tdoc)
+                            print('ES document sent.')
+                            print(tdoc)
+                        elif url == LOCAL:
+                            res = es.index(index="test", doc_type="_doc", body=tdoc)
+                            print('ES document sent.')
+                            print(tdoc)
+                            
+                        # Save Full Image and Save Object Image
+                        #cv2.imwrite('/tf_files/save_image/'+ str((sys.argv)[1]) +"-frame%d.jpg" % person_count, image_np)
+                        #cv2.imwrite('/tf_files/save_threat_image/' + str((sys.argv)[1]) + "-frame%d.jpg" % person_count, roi)
+
+
                         
         
                     #cv2.putText(frame, gunScore, (10, 200), font, 0.8, (0, 255, 0), 2)
