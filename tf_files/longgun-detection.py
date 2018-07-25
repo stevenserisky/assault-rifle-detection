@@ -45,6 +45,20 @@ OUTSIDE_NORTH_EAST="rtsp://admin:1qazxsw2!QAZXSW@@datascience.opswerx.org:20052"
 DIRTYWERX_RAMP="rtsp://admin:1qazxsw2!QAZXSW@@datascience.opswerx.org:20053"
 
 
+# Setup ES 
+try:
+    es = Elasticsearch(
+        [
+            'https://elastic:diatonouscoggedkittlepins@elasticsearch.orange.opswerx.org:443'
+        ],
+        verify_certs=True
+    )
+    print("ES - Connected.")
+    
+except Exception as ex:
+    print("Error: ", ex)
+
+
 # GPU Percentage
 gpuAmount = int((sys.argv)[2]) * 0.1
 
