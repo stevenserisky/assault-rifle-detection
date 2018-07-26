@@ -60,11 +60,12 @@ except Exception as ex:
 
 
 # GPU Percentage
-gpuAmount = int((sys.argv)[2]) * 0.1
+# gpuAmount = int((sys.argv)[2]) * 0.1
 
 
 # Camera Selection
-url = globals()[str((sys.argv)[1])]
+# url = globals()[str((sys.argv)[1])]
+url="
 print url
 
 
@@ -76,7 +77,7 @@ person_gun_threshold = 0.60
 # Intialize Tensorflow session and gpu memory management
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
-config.gpu_options.per_process_gpu_memory_fraction = gpuAmount
+# config.gpu_options.per_process_gpu_memory_fraction = gpuAmount
 session = tf.Session(config=config)
 
 os.chdir("/tensorflow/models/research/object_detection/")
