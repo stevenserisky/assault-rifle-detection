@@ -382,36 +382,27 @@ while(cap.isOpened()):
                         xmin = px[person] 
                         xmax = (px[person] + wid[person])
                         ymin = py[person] 
-                        ymax = (py[person] + hei[person])
-                        
-                                            
+                        ymax = (py[person] + (int(head_hei[person] * 2)))
+                    
                         tdoc = {
-                            #'timestamp': datetime.now(),
+                            'timestamp': datetime.now(),
                             'content': 'Video information',
                             'text': 'Object detected.',
                             'xmin': xmin,
                             'xmax': xmax,
                             'ymin': ymin,
                             'ymax': ymax,
-                         }
+                        }
                     
                         # Send results to ES
-                        if url == RECEPTION_EAST:
-                            res = es.index(index="reception-east", doc_type="_doc", body=tdoc)
-                            print('ES document sent.')
-                            print(tdoc)
-                        elif url == RECEPTION_WEST:
-                            res = es.index(index="reception-west", doc_type="_doc", body=tdoc)
-                            print('ES document sent.')
-                            print(tdoc)
-                        elif url == OUTSIDE_WEST:
-                            res = es.index(index="outside-west", doc_type="_doc", body=tdoc)
-                            print('ES document sent.')
-                            print(tdoc)
-                        elif url == LOCAL:
-                            res = es.index(index="test", doc_type="_doc", body=tdoc)
-                            print('ES document sent.')
-                            print(tdoc)
+                        res = es.index(index="outside-west", doc_type="_doc", body=tdoc)
+                        print('ES document sent.')
+                        print(tdoc)
+
+                        cv2.imwrite('save_image/' + "frame%d.jpg" % person_count, image_np)
+                        print("Horizontal Angle" + str(pxa[person]) )
+                        print(" Vertical Angle " + str(pya[person]))
+                        print(" Head Vertical Angle " + str(pyha[person])) 
                             
                         # Save Full Image and Save Object Image
                         #cv2.imwrite('/tf_files/save_image/'+ str((sys.argv)[1]) +"-frame%d.jpg" % person_count, image_np)
